@@ -6,11 +6,11 @@
 //  */
 // public class TTTGraphics extends JFrame {
 //    private static final long serialVersionUID = 1L; // to prevent serializable warning
-
+//
 //    // Define named constants for the game board
 //    public static final int ROWS = 6;  // ROWS x COLS cells
 //    public static final int COLS = 7;
-
+//
 //    // Define named constants for the drawing graphics
 //    public static final int CELL_SIZE = 120; // cell width/height (square)
 //    public static final int BOARD_WIDTH  = CELL_SIZE * COLS; // the drawing canvas
@@ -27,13 +27,13 @@
 //    public static final Color COLOR_CROSS  = new Color(211, 45, 65);  // Red #D32D41
 //    public static final Color COLOR_NOUGHT = new Color(76, 181, 245); // Blue #4CB5F5
 //    public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
-
+//
 //    // This enum (inner class) contains the various states of the game
 //    public enum State {
 //       PLAYING, DRAW, CROSS_WON, NOUGHT_WON
 //    }
 //    private State currentState;  // the current game state
-
+//
 //    // This enum (inner class) is used for:
 //    // 1. Player: CROSS, NOUGHT
 //    // 2. Cell's content: CROSS, NOUGHT and NO_SEED
@@ -42,20 +42,20 @@
 //    }
 //    private Seed currentPlayer; // the current player
 //    private Seed[][] board;     // Game board of ROWS-by-COLS cells
-
+//
 //    // UI Components
 //    private GamePanel gamePanel; // Drawing canvas (JPanel) for the game board
 //    private JLabel statusBar;  // Status Bar
-
+//
 //    /** Constructor to setup the game and the GUI components */
 //    public TTTGraphics() {
 //       // Initialize the game objects
 //       initGame();
-
+//
 //       // Set up GUI components
 //       gamePanel = new GamePanel();  // Construct a drawing canvas (a JPanel)
 //       gamePanel.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-
+//
 //       // The canvas (JPanel) fires a MouseEvent upon mouse-click
 //       gamePanel.addMouseListener(new MouseAdapter() {
 //          @Override
@@ -72,14 +72,14 @@
 //                    }
 //                 }
 //              }
-            
+//
 //             // // mouse-clicked handler
 //             // int mouseX = e.getX();
 //             // int mouseY = e.getY();
 //             // // Get the row and column clicked
 //             // int row = mouseY / CELL_SIZE;
 //             // int col = mouseX / CELL_SIZE;
-
+//
 //             // if (currentState == State.PLAYING) {
 //             //    if (row >= 0 && row < ROWS && col >= 0
 //             //          && col < COLS && board[row][col] == Seed.NO_SEED) {
@@ -88,7 +88,7 @@
 //             //       // Switch player
 //             //       currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
 //             //    }
-
+//
 //             } else {       // game over
 //                newGame(); // restart the game
 //             }
@@ -96,33 +96,33 @@
 //             repaint();  // Callback paintComponent().
 //          }
 //       });
-
+//
 //       // Setup the status bar (JLabel) to display status message
 //       statusBar = new JLabel("       ");
 //       statusBar.setFont(FONT_STATUS);
 //       statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
 //       statusBar.setOpaque(true);
 //       statusBar.setBackground(COLOR_BG_STATUS);
-
+//
 //       // Set up content pane
 //       Container cp = getContentPane();
 //       cp.setLayout(new BorderLayout());
 //       cp.add(gamePanel, BorderLayout.CENTER);
 //       cp.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
-
+//
 //       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //       pack();  // pack all the components in this JFrame
 //       setTitle("Tic Tac Toe");
 //       setVisible(true);  // show this JFrame
-
+//
 //       newGame();
 //    }
-
+//
 //    /** Initialize the Game (run once) */
 //    public void initGame() {
 //       board = new Seed[ROWS][COLS]; // allocate array
 //    }
-
+//
 //    /** Reset the game-board contents and the status, ready for new game */
 //    public void newGame() {
 //       for (int row = 0; row < ROWS; ++row) {
@@ -133,7 +133,7 @@
 //       currentPlayer = Seed.CROSS;    // cross plays first
 //       currentState  = State.PLAYING; // ready to play
 //    }
-
+//
 //    /**
 //     *  The given player makes a move on (selectedRow, selectedCol).
 //     *  Update cells[selectedRow][selectedCol]. Compute and return the
@@ -142,7 +142,7 @@
 //    public State stepGame(Seed player, int selectedRow, int selectedCol) {
 //       // Update game board
 //       board[selectedRow][selectedCol] = player;
-
+//
 //       // Compute and return the new game state
 //       if (board[selectedRow][0] == player  // 3-in-the-row
 //                 && board[selectedRow][1] == player
@@ -171,18 +171,18 @@
 //          return State.DRAW; // no empty cell, it's a draw
 //       }
 //    }
-
+//
 //    /**
 //     *  Inner class DrawCanvas (extends JPanel) used for custom graphics drawing.
 //     */
 //    class GamePanel extends JPanel {
 //       private static final long serialVersionUID = 1L; // to prevent serializable warning
-
+//
 //       @Override
 //       public void paintComponent(Graphics g) {  // Callback via repaint()
 //          super.paintComponent(g);
 //          setBackground(COLOR_BG);  // set its background color
-
+//
 //          // Draw the grid lines
 //          g.setColor(COLOR_GRID);
 //          for (int row = 1; row < ROWS; ++row) {
@@ -193,7 +193,7 @@
 //             g.fillRoundRect(CELL_SIZE * col - GRID_WIDTH_HALF, 0,
 //                   GRID_WIDTH, BOARD_HEIGHT-1, GRID_WIDTH, GRID_WIDTH);
 //          }
-
+//
 //          // Draw the Seeds of all the cells if they are not empty
 //          // Use Graphics2D which allows us to set the pen's stroke
 //          Graphics2D g2d = (Graphics2D)g;
@@ -215,7 +215,7 @@
 //                }
 //             }
 //          }
-
+//
 //          // Print status message
 //          if (currentState == State.PLAYING) {
 //             statusBar.setForeground(Color.BLACK);
@@ -232,7 +232,7 @@
 //          }
 //       }
 //    }
-
+//
 //    /** The entry main() method */
 //    public static void main(String[] args) {
 //       // Run GUI codes in the Event-Dispatching thread for thread safety

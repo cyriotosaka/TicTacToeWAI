@@ -11,7 +11,7 @@ public class ConnectFour extends JPanel {
    private static final long serialVersionUID = 1L; // to prevent serializable warning
 
    // Define named constants for the drawing graphics
-   public static final String TITLE = "Tic Tac Toe";
+   public static final String TITLE = "Connect Four";
    public static final Color COLOR_BG = Color.WHITE;
    public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
    public static final Color COLOR_CROSS = new Color(239, 105, 80);  // Red #EF6950
@@ -34,36 +34,25 @@ public class ConnectFour extends JPanel {
             int mouseX = e.getX();
             int mouseY = e.getY();
             // Get the row and column clicked
-            int row = mouseY / Cell.SIZE;
             int col = mouseX / Cell.SIZE;
 
             if (currentState == State.PLAYING) {
-                SoundEffects.EAT_FOOD.play();
-
-                // additional for ConnectFour
-                if (col >= 0 && col < Board.COLS) {
-                    // Look for an empty cell starting from the bottom row
-                    for (int rowI = Board.ROWS -1; rowI >= 0; rowI--) {
-                       if (board.cells[rowI][col].content == Seed.NO_SEED) {
-                          board.cells[rowI][col].content = currentPlayer; // Make a move
-                          board.stepGame(currentPlayer, rowI, col); // update state
-                          // Switch player
-                          currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
-                          break;
-                       }
-                    }
-                 }
-
-                /* if (row >= 0 && row < Board.ROWS && col >= 0 && col < Board.COLS
-                      && board.cells[row][col].content == Seed.NO_SEED) {
-                   // Update cells[][] and return the new game state after the move
-                   currentState = board.stepGame(currentPlayer, row, col);
-                   // Switch player
-                   currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
-                }  */
-
+               if (col >= 0 && col < Board.COLS) {
+                  // Look for an empty cell starting from the bottom row
+                  for (int row = Board.ROWS - 1; row >= 0; row--) {
+                     if (board.cells[row][col].content == Seed.NO_SEED) {
+                        board.cells[row][col].content = currentPlayer; // Make a move
+                        currentState = stepGame(currentPlayer, row, col); // update state
+                        if (currentState == State.CROSS_WON || currentState == State.NOUGHT_WON) {
+                           JOptionPane.showMessageDialog(null, (currentPlayer == Seed.CROSS ? "X" : "O") + " won!");
+                        }
+                        // Switch player
+                        currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+                        break;
+                     }
+                  }
+               }
             } else {        // game over
-               SoundEffects.DIE.play();
                newGame();  // restart the game
             }
             // Refresh the drawing canvas
@@ -83,8 +72,6 @@ public class ConnectFour extends JPanel {
       super.setLayout(new BorderLayout());
       super.add(statusBar, BorderLayout.PAGE_END); // same as SOUTH
       super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
-            // account for statusBar in height
-            // SoundEffects.EAT_FOOD.play();
       super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, false));
 
       // Set up Game
@@ -108,6 +95,75 @@ public class ConnectFour extends JPanel {
       currentState = State.PLAYING;  // ready to play
    }
 
+   /** Check if the current player has won */
+   public boolean hasWon(Seed theSeed, int rowSelected, int colSelected) {
+      // Check for 4-in-a-line on the rowSelected
+      int count = 0;
+      for (int col = 0; col < Board.COLS; ++col) {
+         if (board.cells[rowSelected][col].content == theSeed) {
+            ++count;
+            if (count == 4) return true;  // found
+         } else {
+            count = 0; // reset and count again if not consecutive
+         }
+      }
+      // Check for 4-in-a-line on the colSelected
+      count = 0;
+      for (int row = 0; row < Board.ROWS; ++row) {
+         if (board.cells[row][colSelected].content == theSeed) {
+            ++count;
+            if (count == 4) return true;  // found
+         } else {
+            count = 0; // reset and count again if not consecutive
+         }
+      }
+      // Check for 4-in-a-line on the diagonal
+      count = 0;
+      for (int row = 0, col = colSelected - rowSelected; row < Board.ROWS && col < Board.COLS; ++row, ++col) {
+         if (col >= 0 && col < Board.COLS && board.cells[row][col].content == theSeed) {
+            ++count;
+            if (count == 4) return true;  // found
+         } else {
+            count = 0; // reset and count again if not consecutive
+         }
+      }
+      // Check for 4-in-a-line on the opposite diagonal
+      count = 0;
+      for (int row = 0, col = colSelected + rowSelected; row < Board.ROWS && col >= 0; ++row, --col) {
+         if (col < Board.COLS && board.cells[row][col].content == theSeed) {
+            ++count;
+            if (count == 4) return true;  // found
+         } else {
+            count = 0; // reset and count again if not consecutive
+         }
+      }
+      return false;  // no 4-in-a-line found
+   }
+
+   /** The given player makes a move on (selectedRow, selectedCol).
+    *  Update cells[selectedRow][selectedCol]. Compute and return the
+    *  new game state (PLAYING, DRAW, CROSS_WON, NOUGHT_WON).
+    */
+   public State stepGame(Seed player, int selectedRow, int selectedCol) {
+      // Update game board
+      board.cells[selectedRow][selectedCol].content = player;
+
+      // Check for win
+      if (hasWon(player, selectedRow, selectedCol)) {
+         return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
+      } else {
+         // Nobody win. Check for DRAW (all cells occupied) or PLAYING.
+         for (int row = 0; row < Board.ROWS; ++row) {
+            for (int col = 0; col < Board.COLS; ++col) {
+               if (board.cells[row][col].content == Seed.NO_SEED) {
+                  return State.PLAYING; // still have empty cells
+               }
+            }
+         }
+         return State.DRAW; // no empty cell, it's a draw
+      }
+   }
+
    /** Custom painting codes on this JPanel */
    @Override
    public void paintComponent(Graphics g) {  // Callback via repaint()
@@ -128,8 +184,6 @@ public class ConnectFour extends JPanel {
          statusBar.setText("'X' Won! Click to play again.");
       } else if (currentState == State.NOUGHT_WON) {
          statusBar.setForeground(Color.RED);
-         //buat sound effect yay di sini
-         //
          statusBar.setText("'O' Won! Click to play again.");
       }
    }
@@ -147,6 +201,4 @@ public class ConnectFour extends JPanel {
             frame.setLocationRelativeTo(null); // center the application window
             frame.setVisible(true);            // show it
          }
-      });
-   }
-}
+      });}}

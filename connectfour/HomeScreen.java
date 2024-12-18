@@ -14,18 +14,26 @@ public class HomeScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Load the background image
+        Image backgroundImage = new ImageIcon(getClass().getResource("pics/background.png")).getImage();
+        BackgroundPanel backgroundPanel = new BackgroundPanel(backgroundImage);
+        backgroundPanel.setLayout(new BorderLayout());
+
         // Create a panel for the title and description
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
         titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        titlePanel.setOpaque(false); // Make the panel transparent
 
         JLabel titleLabel = new JLabel("Welcome to Tic Tac Toe");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setForeground(Color.WHITE); // Set text color to white for better visibility
 
         JLabel subDescriptionLabel = new JLabel("Play now!");
         subDescriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         subDescriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        subDescriptionLabel.setForeground(Color.WHITE); // Set text color to white for better visibility
 
         titlePanel.add(titleLabel);
         titlePanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -50,6 +58,7 @@ public class HomeScreen extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        buttonPanel.setOpaque(false); // Make the panel transparent
 
         buttonPanel.add(ticTacToeButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -87,10 +96,12 @@ public class HomeScreen extends JFrame {
             }
         });
 
-        // Set layout and add panels
-        setLayout(new BorderLayout());
-        add(titlePanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
+        // Add panels to the background panel
+        backgroundPanel.add(titlePanel, BorderLayout.NORTH);
+        backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Set the content pane to the background panel
+        setContentPane(backgroundPanel);
     }
 
     public static void main(String[] args) {

@@ -7,8 +7,11 @@
  * 2 - 5026231065 - Beh Siu Li
  * 3 - 5026231168 - Okky Priscila Putri
  */
+
 package connectfour;
 
+import playingwithbot.TicTacToe;
+import TicTacToe.TTTGraphics;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -91,22 +94,48 @@ public class HomeScreen extends JFrame {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(connectFourButton);
 
-        // Add action listeners
+//        // Add action listeners
+//        ticTacToeButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SoundEffects.EAT_FOOD.play(); // Play sound effect
+//                // Placeholder for Tic Tac Toe game
+//                JOptionPane.showMessageDialog(null, "Tic Tac Toe game will be here!");
+//            }
+//        });
+
         ticTacToeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SoundEffects.EAT_FOOD.play(); // Play sound effect
-                // Placeholder for Tic Tac Toe game
-                JOptionPane.showMessageDialog(null, "Tic Tac Toe game will be here!");
+                SoundEffects.EAT_FOOD.play();
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new TTTGraphics();
+                    }
+                });
+                dispose();
             }
         });
+
+//        ticTacToeBotButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SoundEffects.EAT_FOOD.play(); // Play sound effect
+//                // Placeholder for Tic Tac Toe Bot game
+//                JOptionPane.showMessageDialog(null, "Tic Tac Toe Bot game will be here!");
+//            }
+//        });
 
         ticTacToeBotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SoundEffects.EAT_FOOD.play(); // Play sound effect
-                // Placeholder for Tic Tac Toe Bot game
-                JOptionPane.showMessageDialog(null, "Tic Tac Toe Bot game will be here!");
+                SoundEffects.EAT_FOOD.play();
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new playingwithbot.TicTacToe(12, 5).show();
+                    }
+                });
+                dispose();
             }
         });
 

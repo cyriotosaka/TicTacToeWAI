@@ -18,7 +18,6 @@ import javax.swing.*;
  */
 
 public class ConnectFour extends JPanel {
-   private static final long serialUID = 1L;
 
    public static final String TITLE = "Connect Four";
    public static final Color COLOR_BG = Color.BLACK;

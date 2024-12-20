@@ -37,7 +37,7 @@ public class Cell {
 
    public void paint(Graphics g) {
       int x1 = col * SIZE + PADDING;
-      int y1 = row * SIZE + PADDING;
+      // int y1 = row * SIZE + PADDING; // Removed unused variable
       if (content == Seed.CROSS || content == Seed.NOUGHT) {
          g.drawImage(content.getImage(), x1, animationY + PADDING, SEED_SIZE, SEED_SIZE, null);
       }

@@ -10,7 +10,6 @@
 
 package connectfour;
 
-import playingwithbot.TicTacToe;
 import TicTacToe.TTTGraphics;
 import javax.swing.*;
 import java.awt.*;

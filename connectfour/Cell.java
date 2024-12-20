@@ -22,7 +22,7 @@ public class Cell {
    }
 
    public void newGame() {
-      content = Seed.NO_SEED;
+      content = Seed.NO_SEED; // Clear the cell content
       animationY = -SIZE; // Reset animation position
    }
 

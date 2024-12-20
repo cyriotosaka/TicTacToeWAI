@@ -15,7 +15,7 @@ public class Main {
         // Launch the HomeScreen
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new HomeScreen().setVisible(true);
+                new HomeScreen(true).setVisible(true);
             }
         });
     }

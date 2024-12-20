@@ -341,7 +341,7 @@ public void paintComponent(Graphics g) {
       aboutItem.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(frame, "Connect Four Game\nVersion 1.0\nDeveloped by [Your Name]");
+            JOptionPane.showMessageDialog(frame, "Connect four final Project!");
          }
       });
 

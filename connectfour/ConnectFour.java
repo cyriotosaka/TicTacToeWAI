@@ -211,47 +211,6 @@ public void newGame() {
       animationTimer.start();
    }
 
-private void createMenuBar(JFrame frame) {
-   JMenuBar menuBar = new JMenuBar();
-
-   JMenu fileMenu = new JMenu("File");
-   JMenuItem newGameItem = new JMenuItem("New Game");
-   newGameItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         System.out.println("New Game button clicked"); // Debug print
-         newGame();
-         revalidate(); // Ensure layout is refreshed
-         repaint();
-      }
-   });
-
-   JMenuItem exitItem = new JMenuItem("Exit");
-   exitItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         System.exit(0);
-      }
-   });
-   fileMenu.add(newGameItem);
-   fileMenu.add(exitItem);
-
-   JMenu helpMenu = new JMenu("Help");
-   JMenuItem aboutItem = new JMenuItem("About");
-   aboutItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         JOptionPane.showMessageDialog(frame, "Connect Four Game\nVersion 1.0\nDeveloped by [Your Name]");
-      }
-   });
-   helpMenu.add(aboutItem);
-
-   menuBar.add(fileMenu);
-   menuBar.add(helpMenu);
-
-   frame.setJMenuBar(menuBar);
-}
-
    public void play() {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
@@ -260,7 +219,7 @@ private void createMenuBar(JFrame frame) {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setLocationRelativeTo(null);
-            createMenuBar(frame); // Set the menu bar here
+            //createMenuBar(frame); // Set the menu bar here
             frame.setVisible(true);
          }
       });
